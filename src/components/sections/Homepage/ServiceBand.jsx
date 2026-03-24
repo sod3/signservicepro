@@ -1,5 +1,5 @@
-import { C } from '../../styles/designTokens';
-import { useFadeUp } from '../../hooks/useFadeUp';
+import { C } from '../../../styles/designTokens';
+import { useFadeUp } from '../../../hooks/useFadeUp';
 
 export function ServiceBand() {
   const ref = useFadeUp();

@@ -1,6 +1,6 @@
-import { C } from '../../styles/designTokens';
-import { useFadeUp } from '../../hooks/useFadeUp';
-import { PhoneIcon } from '../ui/Icons';
+import { C } from '../../../styles/designTokens';
+import { useFadeUp } from '../../../hooks/useFadeUp';
+import { PhoneIcon } from '../../ui/Icons';
 
 export function AboutSection() {
   const ref = useFadeUp();

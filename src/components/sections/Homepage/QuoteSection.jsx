@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { C } from '../../styles/designTokens';
-import { useFadeUp } from '../../hooks/useFadeUp';
-import { PhoneIcon, UploadIcon } from '../ui/Icons';
+import { C } from '../../../styles/designTokens';
+import { useFadeUp } from '../../../hooks/useFadeUp';
+import { PhoneIcon, UploadIcon } from '../../ui/Icons';
 
 export function QuoteSection() {
   const ref = useFadeUp();

@@ -1,5 +1,5 @@
-import { C } from '../../styles/designTokens';
-import { useFadeUp } from '../../hooks/useFadeUp';
+import { C } from '../../../styles/designTokens';
+import { useFadeUp } from '../../../hooks/useFadeUp';
 
 const partnerNames = [
   "Vantage Signs", "SpeedPro Dayton", "Behr Design LLC", "Pattison ID",

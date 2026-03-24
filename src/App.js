@@ -1,16 +1,38 @@
 import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { globalCSS } from "./styles/globalStyles";
 import { Navbar } from "./components/layout/Navbar";
 import { FooterBillboard } from "./components/layout/FooterBillboard";
-import { HeroSection } from "./components/sections/HeroSection";
-import { WhyPartnerSection } from "./components/sections/WhyPartnerSection";
-import { WhoWeServeSection } from "./components/sections/WhoWeServeSection";
-import { AboutSection } from "./components/sections/AboutSection";
-import { PartnersSection } from "./components/sections/PartnersSection";
-import { PressSection } from "./components/sections/PressSection";
-import { ServiceBand } from "./components/sections/ServiceBand";
-import { QuoteSection } from "./components/sections/QuoteSection";
+import { HeroSection } from "./components/sections/Homepage/HeroSection";
+import { WhyPartnerSection } from "./components/sections/Homepage/WhyPartnerSection";
+import { WhoWeServeSection } from "./components/sections/Homepage/WhoWeServeSection";
+import { AboutSection } from "./components/sections/Homepage/AboutSection";
+import { PartnersSection } from "./components/sections/Homepage/PartnersSection";
+import { PressSection } from "./components/sections/Homepage/PressSection";
+import { ServiceBand } from "./components/sections/Homepage/ServiceBand";
+import { QuoteSection } from "./components/sections/Homepage/QuoteSection";
+import OurServicesPage from "./components/sections/Services/OurServicesPage";
 import { C } from './styles/designTokens';
+
+function HomePage() {
+  return (
+    <main>
+      <div style={{ backgroundColor: C.cream}}>
+        <HeroSection />
+      </div>
+      <WhyPartnerSection />
+      <WhoWeServeSection />
+      <AboutSection />
+      <PartnersSection />
+      <PressSection />
+      <div style={{ backgroundColor: C.cream, paddingLeft: "50px", paddingRight: "50px" }}>
+        <ServiceBand />
+      </div>
+      <QuoteSection />
+      <FooterBillboard />
+    </main>
+  );
+}
 
 export default function App() {
   // Inject global styles once
@@ -23,23 +45,15 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <Router>
       <Navbar />
-      <main>
-        <div style={{ backgroundColor: C.cream}}>
-          <HeroSection />
-        </div>
-        <WhyPartnerSection />
-        <WhoWeServeSection />
-        <AboutSection />
-        <PartnersSection />
-        <PressSection />
-        <div style={{ backgroundColor: C.cream, paddingLeft: "50px", paddingRight: "50px" }}>
-          <ServiceBand />
-        </div>
-        <QuoteSection />
-        <FooterBillboard />
-      </main>
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/our-services" element={<OurServicesPage />} />
+        {/* Add other routes as needed */}
+        <Route path="/projects" element={<div>Projects Page</div>} />
+        <Route path="/about-us" element={<div>About Us Page</div>} />
+      </Routes>
+    </Router>
   );
 }

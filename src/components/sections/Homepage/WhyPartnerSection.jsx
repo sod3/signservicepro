@@ -1,7 +1,7 @@
-import { C } from '../../styles/designTokens';
-import { useFadeUp } from '../../hooks/useFadeUp';
-import { GuaranteeRibbon } from '../ui/GuaranteeRibbon';
-import { CheckIcon, StarIcon, BoltIcon, HQIcon } from '../ui/Icons';
+import { C } from '../../../styles/designTokens';
+import { useFadeUp } from '../../../hooks/useFadeUp';
+import { GuaranteeRibbon } from '../../ui/GuaranteeRibbon';
+import { CheckIcon, StarIcon, BoltIcon, HQIcon } from '../../ui/Icons';
 
 const features = [
   {

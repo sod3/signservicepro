@@ -1,6 +1,6 @@
-import { C } from '../../styles/designTokens';
-import { TickerBar } from '../ui/TickerBar';
-import { EmergencyIcon } from '../ui/Icons';
+import { C } from '../../../styles/designTokens';
+import { TickerBar } from '../../ui/TickerBar';
+import { EmergencyIcon } from '../../ui/Icons';
 
 export function HeroSection() {
   return (
