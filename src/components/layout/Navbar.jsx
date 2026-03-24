@@ -4,7 +4,7 @@ import { PhoneIcon, CloseIcon, HamburgerIcon } from '../ui/Icons';
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
