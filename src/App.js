@@ -10,6 +10,7 @@ import { PartnersSection } from "./components/sections/PartnersSection";
 import { PressSection } from "./components/sections/PressSection";
 import { ServiceBand } from "./components/sections/ServiceBand";
 import { QuoteSection } from "./components/sections/QuoteSection";
+import { C } from './styles/designTokens';
 
 export default function App() {
   // Inject global styles once
@@ -25,13 +26,17 @@ export default function App() {
     <>
       <Navbar />
       <main>
-        <HeroSection />
+        <div style={{ backgroundColor: C.cream}}>
+          <HeroSection />
+        </div>
         <WhyPartnerSection />
         <WhoWeServeSection />
         <AboutSection />
         <PartnersSection />
         <PressSection />
-        <ServiceBand />
+        <div style={{ backgroundColor: C.cream, paddingLeft: "50px", paddingRight: "50px" }}>
+          <ServiceBand />
+        </div>
         <QuoteSection />
         <FooterBillboard />
       </main>

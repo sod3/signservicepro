@@ -32,10 +32,16 @@ export const HQIcon = () => (
 );
 
 export const EmergencyIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2">
-    <circle cx="12" cy="12" r="10"/>
-    <line x1="12" y1="8" x2="12" y2="12"/>
-    <line x1="12" y1="16" x2="12.01" y2="16"/>
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    {/* The base/bulb of the siren */}
+    <path d="M6 19h12" />
+    <path d="M8 19v-1a4 4 0 0 1 8 0v1" />
+    {/* The light rays */}
+    <path d="M12 7V3" />
+    <path d="M5 10 2 8" />
+    <path d="M19 10l3-2" />
+    <path d="M8 5 6.5 2.5" />
+    <path d="M16 5l1.5-2.5" />
   </svg>
 );
 

@@ -12,9 +12,12 @@ export function HeroSection() {
       alignItems: "center",
       justifyContent: "center",
       paddingTop: 110,
-      paddingBottom: 60,
+      paddingBottom: 120, // Increased to give room for the slant
       position: "relative",
       overflow: "hidden",
+      /* This creates the steep angle at the bottom (Right side higher than Left) */
+      clipPath: "polygon(0 0, 100% 0, 100% 98%, 0 100%)",
+      WebkitClipPath: "polygon(0 0, 100% 0, 100% 97%, 0 100%)",
     }}>
       <style>{`
         /* Stars */
@@ -38,14 +41,13 @@ export function HeroSection() {
           pointer-events: none;
         }
 
-        /* Billboard outer container */
         .billboard-outer {
           position: relative;
           width: min(880px, 92vw);
           z-index: 2;
+          margin-bottom: 40px;
         }
 
-        /* Spotlight assembly row above billboard */
         .spotlight-row {
           display: flex;
           justify-content: space-between;
@@ -55,7 +57,6 @@ export function HeroSection() {
           align-items: flex-end;
         }
 
-        /* Each spotlight unit = arm + light head */
         .spotlight-unit {
           display: flex;
           flex-direction: column;
@@ -63,7 +64,6 @@ export function HeroSection() {
           position: relative;
         }
 
-        /* Mounting arm - angled metal arm from top */
         .spotlight-arm {
           width: 6px;
           height: 50px;
@@ -72,7 +72,6 @@ export function HeroSection() {
           position: relative;
         }
 
-        /* The light fixture head */
         .spotlight-head {
           width: 36px;
           height: 20px;
@@ -82,7 +81,6 @@ export function HeroSection() {
           box-shadow: 0 2px 6px rgba(0,0,0,.5);
         }
 
-        /* Glow cone from each light pointing down onto billboard */
         .spotlight-glow {
           position: absolute;
           bottom: -1px;
@@ -97,7 +95,6 @@ export function HeroSection() {
           filter: blur(8px);
         }
 
-        /* The bulb glow dot under the fixture */
         .spotlight-bulb {
           width: 18px;
           height: 10px;
@@ -110,7 +107,6 @@ export function HeroSection() {
           box-shadow: 0 0 16px 8px rgba(255, 220, 50, 0.55), 0 0 40px 20px rgba(255, 200, 50, 0.18);
         }
 
-        /* Billboard panel */
         .hero-billboard {
           background: linear-gradient(170deg, #f5f5f5 0%, #ffffff 35%, #f0f0f0 100%);
           border-radius: 4px;
@@ -126,7 +122,6 @@ export function HeroSection() {
           box-sizing: border-box;
         }
 
-        /* Bottom horizontal support bars */
         .billboard-supports {
           display: flex;
           gap: 0;
@@ -142,7 +137,6 @@ export function HeroSection() {
         .billboard-support-bar:first-child { border-radius: 0 0 0 3px; }
         .billboard-support-bar:last-child { border-radius: 0 0 3px 0; }
 
-        /* Support legs connecting panel to crossbar */
         .billboard-legs {
           display: flex;
           justify-content: space-between;
@@ -154,7 +148,6 @@ export function HeroSection() {
           background: linear-gradient(to right, #555, #333);
         }
 
-        /* Crossbar */
         .billboard-crossbar {
           height: 14px;
           background: linear-gradient(to bottom, #666, #3a3a3a);
@@ -163,10 +156,9 @@ export function HeroSection() {
           box-shadow: 0 2px 6px rgba(0,0,0,.4);
         }
 
-        /* Pole */
         .billboard-pole {
           width: 28px;
-          min-height: 180px;
+          min-height: 140px;
           background: linear-gradient(to right, #6b4c30 0%, #9a6f48 30%, #7a5535 60%, #4a3020 100%);
           margin: 0 auto;
           position: relative;
@@ -175,9 +167,8 @@ export function HeroSection() {
           box-shadow: 2px 0 8px rgba(0,0,0,.3);
         }
 
-        /* Hero text */
         .hero-title {
-          font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+          font-family: 'Ubuntu Sans', 'Barlow Condensed', 'Arial Narrow', sans-serif;
           font-weight: 900;
           font-size: clamp(36px, 5.5vw, 58px);
           line-height: 1.05;
@@ -189,6 +180,7 @@ export function HeroSection() {
         .hero-title .green { color: ${C.green}; }
 
         .hero-subtitle {
+          font-family: 'Ubuntu Sans', 'Barlow Condensed', 'Arial Narrow', sans-serif;
           font-size: 15px;
           color: ${C.textGray};
           line-height: 1.65;
@@ -197,14 +189,13 @@ export function HeroSection() {
           font-weight: 400;
         }
 
-        /* Get a Quote button inside billboard */
         .btn-hero-quote {
           background: ${C.navy};
           color: ${C.white};
           border: none;
           border-radius: 50px;
           padding: 13px 36px;
-          font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+          font-family: 'Ubuntu Sans', 'Barlow Condensed', 'Arial Narrow', sans-serif;
           font-weight: 800;
           font-size: 12px;
           letter-spacing: 0.14em;
@@ -216,46 +207,55 @@ export function HeroSection() {
         }
         .btn-hero-quote:hover { background: #1a2d47; }
 
-        /* Emergency badge */
-        .emergency-badge {
-          position: absolute;
-          bottom: 80px;
-          left: -10px;
-          background: ${C.green};
-          border-radius: 50px;
-          padding: 14px 20px 14px 18px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          max-width: 240px;
-          box-shadow: 0 8px 28px rgba(122,193,66,.4);
-          z-index: 10;
-        }
-        .emergency-badge svg { flex-shrink: 0; }
-        .emergency-badge p {
-          font-size: 12px;
-          font-weight: 400;
-          color: ${C.white};
-          line-height: 1.35;
-          margin: 0;
-        }
-        .emergency-badge p strong { font-weight: 800; }
+.emergency-badge {
+  position: absolute;
+  bottom: 130px; /* Adjust based on your billboard height */
+  left: 0;
+  background: ${C.green};
+  /* Only round the right side to match the "taped on" look from the edge */
+  border-radius: 0 100px 100px 0; 
+  padding: 18px 45px 18px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.emergency-badge:hover {
+  transform: translateX(5px);
+}
+
+.emergency-badge .icon-wrapper {
+  color: ${C.navy}; /* Icon is dark navy in the reference */
+  display: flex;
+  align-items: center;
+}
+.emergency-badge p {
+  font-family: 'Ubuntu Sans', 'Inter', sans-serif; /* Or your body font */
+  font-size: 14px;
+  font-weight: 500;
+  color: ${C.navy}; /* Text is dark navy, not white, in the image */
+  line-height: 1.2;
+  margin: 0;
+}
+
+.emergency-badge p strong {
+  display: block;
+  font-weight: 800;
+  font-size: 15px;
+}
 
         @media(max-width:767px){
           .hero-billboard { padding: 36px 24px 32px; }
-          .spotlight-row { padding: 0 20px; }
-          .billboard-pole { min-height: 100px; }
-          .billboard-legs { padding: 0 40px; }
-          .emergency-badge { bottom: 30px; left: 8px; padding: 10px 14px; max-width: 200px; }
+          .emergency-badge { bottom: 80px; left: 8px; }
         }
       `}</style>
 
       <div className="hero-stars" />
 
-      {/* Full billboard assembly */}
       <div className="billboard-outer">
-
-        {/* Spotlights row */}
         <div className="spotlight-row">
           {[0,1,2,3,4].map(i => (
             <div key={i} className="spotlight-unit">
@@ -268,7 +268,6 @@ export function HeroSection() {
           ))}
         </div>
 
-        {/* Billboard panel */}
         <div className="hero-billboard">
           <h1 className="hero-title">
             Installation Services<br />
@@ -276,41 +275,30 @@ export function HeroSection() {
           </h1>
           <p className="hero-subtitle">
             Professional installation and service for sign companies only.
-            Partner with an experienced team that delivers fast turnaround,
-            quick quotes, and high-quality installs so your signs shine.
+            Partner with an experienced team that delivers fast turnaround.
           </p>
           <a href="#quote" className="btn-hero-quote">Get a Quote</a>
         </div>
 
-        {/* Support bars below panel */}
         <div className="billboard-supports">
           {[0,1,2,3,4,5,6,7].map(i => (
             <div key={i} className="billboard-support-bar" />
           ))}
         </div>
 
-        {/* Legs to crossbar */}
         <div className="billboard-legs">
           {[0,1].map(i => <div key={i} className="billboard-leg" />)}
         </div>
-
-        {/* Crossbar */}
         <div className="billboard-crossbar" />
-
-        {/* Pole */}
         <div className="billboard-pole" />
       </div>
 
-      {/* Emergency badge */}
       <div className="emergency-badge">
         <EmergencyIcon />
-        <p>
-          Rapid emergency<br />
-          <strong>response to protect<br />your business visibility</strong>
-        </p>
+        <p>Rapid emergency<br /><strong>response to protect<br />your business visibility</strong></p>
       </div>
 
-      {/* Ticker */}
+      {/* Ticker will now align with the clipped bottom because it's positioned absolute bottom */}
       <TickerBar />
     </section>
   );
