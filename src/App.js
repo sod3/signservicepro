@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import { globalCSS } from "./styles/globalStyles";
+import { Navbar } from "./components/layout/Navbar";
+import { FooterBillboard } from "./components/layout/FooterBillboard";
+import { HeroSection } from "./components/sections/HeroSection";
+import { WhyPartnerSection } from "./components/sections/WhyPartnerSection";
+import { WhoWeServeSection } from "./components/sections/WhoWeServeSection";
+import { AboutSection } from "./components/sections/AboutSection";
+import { PartnersSection } from "./components/sections/PartnersSection";
+import { PressSection } from "./components/sections/PressSection";
+import { ServiceBand } from "./components/sections/ServiceBand";
+import { QuoteSection } from "./components/sections/QuoteSection";
 
-function App() {
+export default function App() {
+  // Inject global styles once
+  useEffect(() => {
+    const tag = document.createElement("style");
+    tag.id = "ssp-global";
+    tag.textContent = globalCSS;
+    if (!document.getElementById("ssp-global")) document.head.appendChild(tag);
+    return () => { const el = document.getElementById("ssp-global"); if (el) el.remove(); };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <main>
+        <HeroSection />
+        <WhyPartnerSection />
+        <WhoWeServeSection />
+        <AboutSection />
+        <PartnersSection />
+        <PressSection />
+        <ServiceBand />
+        <QuoteSection />
+        <FooterBillboard />
+      </main>
+    </>
   );
 }
-
-export default App;
