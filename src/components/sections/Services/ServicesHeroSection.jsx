@@ -1,159 +1,115 @@
-import {C} from "../../../styles/designTokens";
+import { C } from '../../../styles/designTokens';
+import { TickerBar } from '../../ui/TickerBar';
 
-/* ─── Services Ticker Bar ────────────────────────────────────────────────────── */
-function ServicesTickerBar() {
-  const text  = "PROFESSIONAL SIGN INSTALLATION & MAINTENANCE IN DAYTON, OH";
-  const items = Array(8).fill(text);
-  return (
-    <div style={{
-      position: "absolute", bottom: 0, left: 0, right: 0,
-      background: C.navy, overflow: "hidden",
-      padding: "14px 0", borderTop: `3px solid ${C.green}`,
-      zIndex: 5,
-    }}>
-      <div className="ticker-inner" style={{ display: "flex", width: "max-content" }}>
-        {items.map((t, i) => (
-          <span key={i} style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 800, fontSize: 15,
-            color: i % 2 === 0 ? C.white : C.green,
-            letterSpacing: ".12em", textTransform: "uppercase",
-            padding: "0 40px", whiteSpace: "nowrap",
-          }}>
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ─── Services Hero Section ──────────────────────────────────────────────────── */
 function ServicesHeroSection() {
   return (
     <section style={{
       minHeight: "100vh",
-      position: "relative",
-      overflow: "hidden",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      paddingTop: 100,
-      paddingBottom: 80,
+      position: "relative",
+      overflow: "visible",
+      padding: "100px 20px 0 20px",
+      textAlign: "center",
+      backgroundColor: "#fff" // Add white background to section
     }}>
       <style>{`
-        /* Blurred city skyline background */
-        .services-hero-bg {
+        .hero-container {
           position: absolute;
           inset: 0;
-          /* Gradient simulating dusk sky — replace with <img> for real photo */
-          background:
-            linear-gradient(
-              to bottom,
-              #d8e8f0 0%,
-              #c8d8e8 20%,
-              #e8d0b8 55%,
-              #c8a870 75%,
-              #6a8860 100%
-            );
-          filter: blur(0px);
+          clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+          -webkit-clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+          z-index: 0; /* Changed from -1 to 0 */
+          overflow: hidden;
+        }
+
+        .hero-container::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: url('/footerbackground.png');
+          background-size: cover;
+          background-position: center;
+          filter: blur(4px) brightness(1.2);
+          transform: scale(1.1);
+        }
+
+        .hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(14, 30, 56, 0.1); 
           z-index: 0;
         }
-        /* City silhouette overlay */
-        .services-hero-city {
-          position: absolute;
-          bottom: 60px; left: 0; right: 0;
-          height: 260px;
-          background:
-            linear-gradient(to top, rgba(60,80,50,.55) 0%, transparent 100%);
-          z-index: 1;
-        }
-        /* Light overlay for text legibility */
-        .services-hero-overlay {
-          position: absolute;
-          inset: 0;
-          background: rgba(220,230,235,.45);
-          z-index: 2;
-        }
 
-        /* Content */
-        .services-hero-content {
+        .hero-content {
           position: relative;
-          z-index: 3;
-          text-align: center;
-          max-width: 800px;
-          padding: 0 24px;
+          z-index: 2;
+          max-width: 900px;
+          margin: 0 auto;
+          margin-bottom: 100px;
         }
 
-        .services-hero-eyebrow {
-          font-family: 'Barlow Condensed', sans-serif;
+        .hero-top-text {
+          font-family: 'Ubuntu Sans', sans-serif;
+          font-size: 18px;
           font-weight: 700;
-          font-size: clamp(12px, 1.5vw, 14px);
-          letter-spacing: .18em;
-          text-transform: uppercase;
           color: ${C.navy};
-          margin-bottom: 18px;
-          display: block;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 20px;
         }
 
-        .services-hero-title {
-          font-family: 'Barlow Condensed', sans-serif;
+        .hero-main-title {
+          font-family: 'Ubuntu Sans', sans-serif;
+          font-size: clamp(32px, 5vw, 64px);
           font-weight: 900;
-          font-size: clamp(40px, 7vw, 76px);
-          line-height: 1.0;
           color: ${C.navy};
+          line-height: 1.1;
+          margin-bottom: 30px;
           text-transform: uppercase;
-          margin-bottom: 32px;
         }
 
-        .services-hero-cta {
+        .hero-tagline {
           display: inline-block;
           background: ${C.navy};
-          color: ${C.white};
-          font-family: 'Barlow Condensed', sans-serif;
-          font-weight: 700;
-          font-size: 11px;
-          letter-spacing: .16em;
+          color: #fff;
+          padding: 10px 24px;
+          border-radius: 50px;
+          font-size: 12px;
+          font-weight: 600;
           text-transform: uppercase;
-          padding: 14px 32px;
-          border-radius: 4px;
-          text-decoration: none;
-          transition: background .2s, transform .2s;
-        }
-        .services-hero-cta:hover {
-          background: ${C.navyLight};
-          transform: translateY(-2px);
+          letter-spacing: 1px;
         }
 
-        @media(max-width:767px){
-          .services-hero-title { font-size: clamp(32px, 8vw, 48px); }
+        .ticker-wrapper {
+          width: 100%;
+          position: relative;
+          z-index: 3;
+          background: white;
+          margin-top: auto;
+          padding: 20px 0;
         }
       `}</style>
 
-      {/* Background layers */}
-      <div className="services-hero-bg" />
-      <div className="services-hero-city" />
-      <div className="services-hero-overlay" />
-
-      {/* Text content */}
-      <div className="services-hero-content">
-        <span className="services-hero-eyebrow">
-          Complete Sign Solutions – Installation, Maintenance &amp; Repair
-        </span>
-        <h1 className="services-hero-title">
-          From Channel Letters to LED<br />
-          Displays, Our Certified Crews<br />
-          Deliver Precision, Safety, and<br />
-          Impact.
-        </h1>
-        <a href="#quote" className="services-hero-cta">
-          Enhance Your Visibility Today With Professional Sign Services.
-        </a>
+      <div className="hero-container">
+        <div className="hero-overlay" />
       </div>
 
-      {/* Ticker */}
-      <ServicesTickerBar />
+      <div className="hero-content">
+        <p className="hero-top-text">Complete Sign Solutions - Installation, Maintenance & Repair</p>
+        <h1 className="hero-main-title">
+          From Channel Letters to LED Displays, Our Certified Crews Deliver Precision, Safety, and Impact.
+        </h1>
+        <div className="hero-tagline">
+          Enhance your visibility today with professional sign services.
+        </div>
+      </div>
+
+      <div className="ticker-wrapper">
+        <TickerBar />
+      </div>
     </section>
   );
 }

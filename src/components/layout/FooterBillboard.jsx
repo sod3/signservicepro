@@ -1,10 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+`;
 
 const FooterBillboardContainer = styled.div`
   width: 100%;
   position: relative;
-  height: 100vh; // Changed to fixed height to ensure full background visibility
+  height: 100vh; 
   overflow: hidden;
 `;
 
@@ -15,26 +21,19 @@ const BackgroundLayer = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-color: black; // Matches the top of your background image
+  background-color: black; 
   
   &::before {
     content: '';
     position: absolute;
-    /* Reduced the negative offset to prevent losing image detail at the edges */
     top: -2%; 
     left: -2%;
     width: 104%;
     height: 104%;
-    
     background-image: url('footerbackground.png');
-    /* '100% 100%' ensures the full image is visible without cropping. 
-       If the aspect ratio feels off, use 'contain' and set a background-color.
-    */
     background-size: 100% 100%; 
     background-position: center;
     background-repeat: no-repeat;
-    
-    /* Increased blur slightly to match the soft look in your reference */
     filter: blur(8px); 
   }
 `;
@@ -56,27 +55,44 @@ const BillboardImage = styled.img`
   filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.5));
 `;
 
-const TalkToAiButton = styled.a`
+// --- UPDATED UI: ICON OUTSIDE BUBBLE ---
+
+const ChatWrapper = styled.div`
   position: absolute;
   top: 40px;
   right: 5%;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Aligns bubble and icon to the right */
+  gap: 12px;
+  z-index: 10;
+`;
+
+const TalkToAiButton = styled.a`
+  display: flex;
   align-items: center;
   text-decoration: none;
   background: white;
-  padding: 10px 18px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  z-index: 10;
+  padding: 12px 20px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+  transition: transform 0.3s ease;
 
+  // &:hover {
+  //   transform: translateY(-5px);
+  // }
+
+  /* Chat bubble tail pointing DOWN to the icon */
   &:after {
     content: '';
     position: absolute;
     bottom: -8px;
-    right: 20px;
-    border-width: 10px 10px 0;
-    border-style: solid;
-    border-color: white transparent;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+    // background: white;
+    transform: rotate(45deg);
   }
 `;
 
@@ -84,25 +100,31 @@ const TalkText = styled.span`
   font-family: 'Inter', sans-serif, Arial;
   font-weight: 700;
   font-size: 15px;
-  color: #58a74e; // Green text to match the brand
-  margin-right: 10px;
+  color: #333;
 `;
 
 const SignProIcon = styled.div`
-  width: 35px;
-  height: 35px;
-  background-color: #7ed321;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #7ed321 0%, #58a74e 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 5px 15px rgba(126, 211, 33, 0.4);
+  animation: ${pulse} 3s infinite ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: 35px;
   
   &::before {
-    content: '✦'; // Sparkle icon
+    content: '✦'; 
     color: white;
-    font-size: 20px;
+    font-size: 22px;
   }
 `;
+
+// --- END UPDATED UI ---
 
 const FooterLinks = styled.div`
   position: absolute;
@@ -122,10 +144,12 @@ const FooterBillboard = () => {
     <FooterBillboardContainer>
       <BackgroundLayer />
 
-      <TalkToAiButton>
-        <TalkText>Talk to our AI</TalkText>
+      <ChatWrapper>
+        <TalkToAiButton href="#">
+          <TalkText>Talk to our AI</TalkText>
+        </TalkToAiButton>
         <SignProIcon />
-      </TalkToAiButton>
+      </ChatWrapper>
 
       <BillboardPositioner>
         <BillboardImage src='billboard.png' alt='Sign Installation Billboard' />
