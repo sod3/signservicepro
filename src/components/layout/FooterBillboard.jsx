@@ -1,101 +1,147 @@
-import { C } from '../../styles/designTokens';
-import { AIIcon } from '../ui/Icons';
+import React from 'react';
+import styled from 'styled-components';
 
-export function FooterBillboard() {
+const FooterBillboardContainer = styled.div`
+  width: 100%;
+  position: relative;
+  height: 100vh; // Changed to fixed height to ensure full background visibility
+  overflow: hidden;
+`;
+
+const BackgroundLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: black; // Matches the top of your background image
+  
+  &::before {
+    content: '';
+    position: absolute;
+    /* Reduced the negative offset to prevent losing image detail at the edges */
+    top: -2%; 
+    left: -2%;
+    width: 104%;
+    height: 104%;
+    
+    background-image: url('footerbackground.png');
+    /* '100% 100%' ensures the full image is visible without cropping. 
+       If the aspect ratio feels off, use 'contain' and set a background-color.
+    */
+    background-size: 100% 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Increased blur slightly to match the soft look in your reference */
+    filter: blur(8px); 
+  }
+`;
+
+const BillboardPositioner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%; 
+  max-width: 1400px;
+  z-index: 1;
+`;
+
+const BillboardImage = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.5));
+`;
+
+const TalkToAiButton = styled.a`
+  position: absolute;
+  top: 40px;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  z-index: 10;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 20px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: white transparent;
+  }
+`;
+
+const TalkText = styled.span`
+  font-family: 'Inter', sans-serif, Arial;
+  font-weight: 700;
+  font-size: 15px;
+  color: #58a74e; // Green text to match the brand
+  margin-right: 10px;
+`;
+
+const SignProIcon = styled.div`
+  width: 35px;
+  height: 35px;
+  background-color: #7ed321;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &::before {
+    content: '✦'; // Sparkle icon
+    color: white;
+    font-size: 20px;
+  }
+`;
+
+const FooterLinks = styled.div`
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  z-index: 5;
+`;
+
+const FooterBillboard = () => {
   return (
-    <section style={{
-      background: `linear-gradient(to bottom, #c8c8b0 0%, #a8a890 100%)`,
-      position: "relative", overflow: "hidden",
-      minHeight: 420, display: "flex", alignItems: "flex-end"
-    }}>
-      {/* Sky gradient */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "linear-gradient(to bottom, #e8c870 0%, #c87820 40%, #804010 70%, #2a1808 100%)",
-        opacity: .45
-      }} />
+    <FooterBillboardContainer>
+      <BackgroundLayer />
 
-      {/* Billboard */}
-      <div style={{
-        position: "absolute", top: "10%", left: "50%",
-        transform: "translateX(-50%)",
-        width: "min(760px,85vw)",
-        background: C.cream, borderRadius: 8,
-        padding: "36px 48px",
-        display: "flex", alignItems: "center", gap: 40,
-        boxShadow: "0 20px 60px rgba(0,0,0,.3)"
-      }}>
-        {/* Content */}
-        <div style={{ flex: 1 }}>
-          <h3 style={{
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 900, fontSize: "clamp(24px,3vw,38px)",
-            textTransform: "uppercase", color: C.navy,
-            lineHeight: 1.1, marginBottom: 8
-          }}>
-            Exterior & Interior<br />
-            <strong>Sign Installation</strong>
-          </h3>
-          <p style={{
-            fontSize: 11, fontWeight: 700,
-            color: C.textGray, letterSpacing: ".1em",
-            textTransform: "uppercase"
-          }}>
-            Delivering high-quality installations that help your<br />
-            signs and your clients look their best.
-          </p>
-        </div>
-        {/* Person */}
-        <div style={{
-          flex: "0 0 160px", height: 200,
-          borderRadius: 8,
-          background: "linear-gradient(135deg, #6a9a6a 0%, #3a6a3a 100%)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "rgba(255,255,255,.6)", fontSize: 11, fontWeight: 600
-        }}>[Person Photo]</div>
-      </div>
+      <TalkToAiButton>
+        <TalkText>Talk to our AI</TalkText>
+        <SignProIcon />
+      </TalkToAiButton>
 
-      {/* AI Chat bubble */}
-      <div style={{
-        position: "absolute", bottom: 60, right: 40,
-        display: "flex", alignItems: "center", gap: 12, zIndex: 5
-      }}>
-        <div style={{
-          background: C.white, borderRadius: 20,
-          padding: "8px 16px", fontSize: 13, fontWeight: 600,
-          color: C.navy, boxShadow: "0 4px 16px rgba(0,0,0,.15)"
-        }}>Talk to our AI</div>
-        <div style={{
-          width: 52, height: 52, borderRadius: "50%",
-          background: `linear-gradient(135deg, ${C.green} 0%, ${C.greenDark} 100%)`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 4px 16px rgba(122,193,66,.4)",
-          cursor: "pointer"
-        }}>
-          <AIIcon />
-        </div>
-      </div>
+      <BillboardPositioner>
+        <BillboardImage src='billboard.png' alt='Sign Installation Billboard' />
+      </BillboardPositioner>
 
-      {/* Footer bar */}
-      <div style={{
-        position: "relative", zIndex: 2, width: "100%",
-        background: "rgba(0,0,0,.7)", padding: "18px 40px",
-        display: "flex", flexWrap: "wrap", alignItems: "center",
-        justifyContent: "space-between", gap: 12
-      }}>
-        <div style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }}>
-          <a href="#" style={{ color: "inherit", textDecoration: "none" }}>Privacy Policy</a>
-          {" | "}
-          <a href="#" style={{ color: "inherit", textDecoration: "none" }}>Your Privacy Choices</a>
+      <FooterLinks>
+        <div>
+          Privacy Policy | Your Privacy Choices
         </div>
-        <div style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }}>
-          © 2025 SIGN SERVICE PRO. All rights Reserved.
+        <div>
+          © 2025 SIGN SERVICE PRO . All rights Reserved. &nbsp; 
+          <span style={{color: '#7ed321'}}>Web Design</span> By Latin Branding
         </div>
-        <div style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }}>
-          Web Design{" "}
-          <span style={{ color: C.green }}>By Latin Branding</span>
-        </div>
-      </div>
-    </section>
+      </FooterLinks>
+    </FooterBillboardContainer>
   );
-}
+};
+
+export default FooterBillboard;

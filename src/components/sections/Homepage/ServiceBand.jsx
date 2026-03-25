@@ -6,82 +6,125 @@ export function ServiceBand() {
 
   return (
     <section style={{
-      background: C.green,
-      padding: "64px 24px",
-      position: "relative", 
-      overflow: "hidden",
-      borderRadius: "40px",
+      padding: "24px 0 0", // Top padding gives space above the green box
+      position: "relative",
     }}>
       <style>{`
-        .service-band-grid {
-          display: grid;
-          grid-template-columns: 1fr 300px;
-          gap: 40px;
-          align-items: center;
-          max-width: 1100px;
+        /* --- Service Band Inner Green Box --- */
+        .service-band-inner {
+          background: ${C.green};
+          border-radius: 40px;
+          padding: 80px 60px; /* Adjust padding for content alignment */
+          position: "relative",
+          max-width: 1200px;
           margin: 0 auto;
         }
 
-        @media (max-width: 767px) {
-          .service-band-grid {
-            grid-template-columns: 1fr;
-            gap: 32px;
+        /* --- Content Container --- */
+        .service-content {
+          max-width: 600px; /* Adjust as needed */
+        }
+
+        /* --- Image Positioned Absolutely --- */
+        .service-band-image {
+          position: absolute;
+          bottom: 0;
+          right: 20px; /* Adjust as needed */
+          z-index: 10;
+        }
+
+        /* --- Button Styling --- */
+        .btn-upgrade {
+          background: ${C.white};
+          color: ${C.green};
+          font-weight: 800;
+          padding: 12px 24px;
+          border-radius: 30px;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 13px;
+          text-transform: uppercase;
+          transition: background 0.3s ease;
+        }
+
+        .btn-upgrade:hover {
+          background: rgba(255, 255, 255, 0.85);
+        }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 1024px) {
+          .service-band-inner {
+            padding: 60px 40px;
           }
-          
-          .service-photo-placeholder {
-            max-width: 100%;
-            height: 240px !important; /* Slightly shorter on mobile */
+
+          .service-content {
+            max-width: 500px;
+          }
+
+          .service-band-image img {
+            max-width: 320px; /* Reduce image size for smaller screens */
+          }
+        }
+
+        @media (max-width: 767px) {
+          .service-band-inner {
+            padding: 40px 24px 340px; /* Add bottom padding to prevent overlap with the content */
+            text-align: center;
+          }
+
+          .service-band-image {
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+          }
+
+          .service-band-image img {
+            max-width: 100%; /* Image is full width of content or slightly smaller */
           }
         }
       `}</style>
 
-      <div className="service-band-grid fade-up" ref={ref}>
-        <div>
+      {/* --- Section Background Elements --- */}
+      <div className="service-band-inner fade-up" ref={ref}>
+        <div className="service-content">
           <h2 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 900, 
-            fontSize: "clamp(30px, 4vw, 48px)",
-            textTransform: "uppercase", 
+            fontWeight: 900,
+            fontSize: "clamp(32px, 5vw, 42px)",
+            textTransform: "uppercase",
             color: C.white,
-            lineHeight: 1.1, 
-            marginBottom: 16
+            lineHeight: 1,
+            marginBottom: 24,
+            letterSpacing: "-0.01em",
           }}>
             Service and Maintenance<br />for Local Businesses
           </h2>
           <p style={{
-            fontSize: 14, 
-            color: "rgba(255,255,255,.85)",
-            lineHeight: 1.7, 
-            maxWidth: 480, 
-            marginBottom: 28
+            fontSize: 13,
+            color: "rgba(255,255,255,.9)",
+            lineHeight: 1.7,
+            maxWidth: 480,
+            marginBottom: 32,
+            opacity: 0.9,
           }}>
             Transform your business's presence with our expert sign installation and maintenance
             services. Our high-quality materials ensure lasting durability. Discover how our sign
             installation services can light up your success.
           </p>
-          <a href="#quote" className="btn" style={{
-            background: C.white, 
-            color: C.green,
-            fontWeight: 800
-          }}>Learn More</a>
+          <a href="#quote" className="btn-upgrade">
+            Upgrade Your Signs!
+          </a>
         </div>
 
-        {/* Person photo placeholder */}
-        <div 
-          className="service-photo-placeholder"
-          style={{
-            height: 280, 
-            borderRadius: 16,
-            background: "rgba(255,255,255,.15)",
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center",
-            color: "rgba(255,255,255,.6)", 
-            fontSize: 13, 
-            fontWeight: 600
-          }}
-        >
-          [Team Photo]
+        {/* --- Team Image (Positioned Absolute) --- */}
+        <div className="service-band-image">
+          <img 
+            src="/teamphoto.png" // Pointing to public folder
+            alt="Smiling service team member with arms crossed" 
+            style={{ display: "block", maxWidth: "320px", height: "auto" }}
+          />
         </div>
       </div>
     </section>

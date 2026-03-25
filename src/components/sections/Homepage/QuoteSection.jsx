@@ -2,6 +2,7 @@ import { useState } from "react";
 import { C } from '../../../styles/designTokens';
 import { useFadeUp } from '../../../hooks/useFadeUp';
 import { PhoneIcon, UploadIcon } from '../../ui/Icons';
+import { Link } from "react-router-dom";
 
 export function QuoteSection() {
   const ref = useFadeUp();
@@ -12,7 +13,7 @@ export function QuoteSection() {
   const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
 
   return (
-    <section id="quote" style={{ background: C.cream, padding: "100px 0" }}>
+    <section id="quote" style={{ background: C.cream, padding: "100px 24px" }}>
       <style>{`
         .quote-layout {
           max-width: 1100px;
@@ -33,18 +34,12 @@ export function QuoteSection() {
         <div>
           {/* Small logo */}
           <div style={{
-            background: C.navy, borderRadius: 8, padding: "10px 18px",
             display: "inline-flex", alignItems: "baseline", gap: 6,
             marginBottom: 28
           }}>
-            <span style={{
-              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900,
-              fontSize: 22, color: C.white
-            }}>Si<span style={{ color: C.green }}>G</span>N</span>
-            <div>
-              <div style={{ fontSize: 10, fontWeight: 700, color: C.green, letterSpacing: 1.5, textTransform: "uppercase" }}>SERVICE</div>
-              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, fontSize: 22, color: C.white, lineHeight: 1 }}>PRO</div>
-            </div>
+          <Link>
+            <img src="/logo.png" alt="SiGn Service PRO logo" style={{ width: "300px", height: "auto" }} />
+          </Link>
           </div>
 
           <h2 style={{
@@ -63,19 +58,23 @@ export function QuoteSection() {
             Beavercreek • Tipp City • Vandalia • Centerville • Huber Heights
           </p>
 
-          {/* Avatar row */}
+          {/* Avatar row - UPDATED WITH ICONS */}
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
             <div style={{ display: "flex" }}>
-              {[0,1,2,3,4].map(i => (
+              {["icon", "icon1", "icon2", "icon3", "icon4"].map((iconName, i) => (
                 <div key={i} style={{
                   width: 38, height: 38, borderRadius: "50%",
                   border: "2.5px solid white",
-                  background: `hsl(${i * 40 + 180}, 30%, 55%)`,
+                  background: "#eee",
                   marginLeft: i > 0 ? -10 : 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#fff", fontSize: 11, fontWeight: 700
+                  overflow: "hidden"
                 }}>
-                  {String.fromCharCode(65 + i)}
+                  <img 
+                    src={`/icon/${iconName}.png`} 
+                    alt={`client-${i}`} 
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                  />
                 </div>
               ))}
             </div>
@@ -91,7 +90,12 @@ export function QuoteSection() {
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a href="#quote" className="btn btn-green">Get a Quote</a>
-            <a href="tel:+1234567890" className="btn btn-navy">
+            <a href="tel:+1234567890" className="btn btn-navy" style={{
+              background: "#EFF7E2",
+              color: C.textDark,
+              border: "2px solid #000",
+              borderRadius: 10
+            }}>
               <PhoneIcon /> Call Us Now
             </a>
           </div>
@@ -105,11 +109,11 @@ export function QuoteSection() {
         }}>
           <h3 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 900, fontSize: 34,
+            fontWeight: 700, fontSize: 44,
             color: C.white, textAlign: "center",
             marginBottom: 28, letterSpacing: ".02em"
           }}>
-            Get a <span style={{ color: C.green }}>Quote</span>
+            GET A <span style={{ color: C.green }}>QUOTE</span>
           </h3>
 
           {[
@@ -129,6 +133,7 @@ export function QuoteSection() {
                 type="text"
                 name={field.name}
                 placeholder={field.ph}
+                style={{ backgroundColor: "white" }}
                 value={form[field.name]}
                 onChange={handleChange}
                 className="quote-input"
@@ -147,8 +152,8 @@ export function QuoteSection() {
             <button
               className="btn"
               style={{
-                background: "rgba(255,255,255,.12)",
-                color: C.white,
+                background: "#EFF7E2",
+                color: C.textDark,
                 border: "1.5px solid rgba(255,255,255,.25)",
               }}
             >

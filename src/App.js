@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { globalCSS } from "./styles/globalStyles";
 import { Navbar } from "./components/layout/Navbar";
-import { FooterBillboard } from "./components/layout/FooterBillboard";
+import FooterBillboard from "./components/layout/FooterBillboard";
 import { HeroSection } from "./components/sections/Homepage/HeroSection";
 import { WhyPartnerSection } from "./components/sections/Homepage/WhyPartnerSection";
 import { WhoWeServeSection } from "./components/sections/Homepage/WhoWeServeSection";
