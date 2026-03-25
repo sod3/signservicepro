@@ -1,6 +1,5 @@
 import { C } from '../../../styles/designTokens';
 import { useFadeUp } from '../../../hooks/useFadeUp';
-import { GuaranteeRibbon } from '../../ui/GuaranteeRibbon';
 import { CheckIcon, StarIcon, BoltIcon, HQIcon } from '../../ui/Icons';
 
 const features = [
@@ -79,11 +78,11 @@ export function WhyPartnerSection() {
               display: "flex", alignItems: "center", justifyContent: "center",
               color: "#fff", fontSize: 13, fontWeight: 600
             }}>
-              [Bucket Truck Photo]
+              <img src="/image.png" alt="Bucket Truck Photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           </div>
           <div style={{
-            position: "absolute", bottom: 0, left: 0, width: 220, height: 200,
+            position: "absolute", bottom: 80, left: -40, width: 220, height: 200,
             borderRadius: 12, overflow: "hidden",
             boxShadow: "0 12px 32px rgba(13,27,46,.18)"
           }}>
@@ -93,7 +92,7 @@ export function WhyPartnerSection() {
               display: "flex", alignItems: "center", justifyContent: "center",
               color: "#fff", fontSize: 13, fontWeight: 600
             }}>
-              [Sign Install Photo]
+              <img src="/image2.png" alt="Bucket Truck Photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           </div>
         </div>
@@ -113,9 +112,6 @@ export function WhyPartnerSection() {
           ))}
         </div>
       </div>
-
-      {/* Guarantee ribbon */}
-      <GuaranteeRibbon />
     </section>
   );
 }

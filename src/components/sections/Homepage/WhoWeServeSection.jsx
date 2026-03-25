@@ -1,24 +1,28 @@
 import { C } from '../../../styles/designTokens';
 import { useFadeUp } from '../../../hooks/useFadeUp';
+import { GuaranteeRibbon } from '../../ui/GuaranteeRibbon'
 
 export function WhoWeServeSection() {
   const ref = useFadeUp();
 
   return (
-    <section style={{ background: C.cream, paddingBottom: 80 }}>
+    <section style={{ background: C.cream, paddingBottom: 80, position: "relative", overflow: "hidden"}}>
+      <GuaranteeRibbon />
+      
       {/* Isometric illustration placeholder */}
       <div style={{
         maxWidth: 800, margin: "0 auto 0", padding: "0 24px",
-        display: "flex", justifyContent: "center"
+        display: "flex", justifyContent: "center",
+        position: "relative", 
+        zIndex: 2 
       }}>
         <div style={{
-          width: "100%", maxWidth: 700, height: 380,
-          background: "linear-gradient(135deg, #c8d8c0 0%, #a8c4a0 100%)",
+          width: "100%", maxWidth: 700, height: 300,
           borderRadius: 16,
           display: "flex", alignItems: "center", justifyContent: "center",
           color: "#fff", fontWeight: 700, fontSize: 14, letterSpacing: ".05em"
         }}>
-          [Isometric Construction Scene Illustration]
+          <img src="/Construction.png" alt="Isometric Construction Scene Illustration" />
         </div>
       </div>
 
@@ -38,8 +42,14 @@ export function WhoWeServeSection() {
             grid-template-columns: 1fr 1fr;
             gap: 48px;
           }
+          .serve-card {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+          }
           @media(max-width:767px){
             .serve-grid { grid-template-columns: 1fr; gap: 40px; }
+            .serve-card { flex-direction: column; }
           }
         `}</style>
 
@@ -48,19 +58,20 @@ export function WhoWeServeSection() {
             {
               title: "Independent Sign Shops",
               desc: "Need installation capabilities without hiring your own crew? We install under your brand, helping you offer full-service solutions without extra overhead. You design and fabricate. We handle the installation.",
-              img: "[Sign Shop Photo]",
+              // Replaced text with the <img> tag
+              img: <img src="/sign1.png" alt="Sign Shop" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />,
               imgBg: "linear-gradient(135deg, #8ab0c8 0%, #5a8090 100%)"
             },
             {
               title: "Regional & National Sign Companies",
               desc: "Looking for a reliable installation partner in the mid-Ohio region? We service a 2-hour radius around our shop including Dayton, Springfield, Cincinnati, Columbus, Toledo, Lima, and eastern Indiana. Multi-site rollouts, service programs, and maintenance partnerships are welcome.",
-              img: "[City Skyline Photo]",
+              img: <img src="/city.png" alt="Sign Shop" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />,
               imgBg: "linear-gradient(135deg, #7a9680 0%, #4a6650 100%)"
             }
           ].map((s, i) => (
             <div key={i} className="serve-card">
               <div style={{
-                flex: "0 0 160px", height: 140,
+                flex: "0 0 160px", width: 160, height: 140,
                 borderRadius: 12, overflow: "hidden",
                 boxShadow: "0 8px 24px rgba(13,27,46,.12)"
               }}>
@@ -68,9 +79,10 @@ export function WhoWeServeSection() {
                   width: "100%", height: "100%",
                   background: s.imgBg,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#fff", fontSize: 11, fontWeight: 600, textAlign: "center",
-                  padding: 8
-                }}>{s.img}</div>
+                  color: "#fff", fontSize: 11, fontWeight: 600, textAlign: "center"
+                }}>
+                  {s.img}
+                </div>
               </div>
               <div style={{ flex: 1 }}>
                 <h3 style={{

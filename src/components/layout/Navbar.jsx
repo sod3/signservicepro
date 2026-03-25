@@ -24,7 +24,7 @@ export function Navbar() {
       <style>{`
         .navbar-wrap {
           position: fixed;
-          top: 12px; left: 50%;
+          top: 20px; left: 50%;
           transform: translateX(-50%);
           width: calc(100% - 48px);
           max-width: 1100px;
@@ -129,7 +129,7 @@ export function Navbar() {
           background: ${C.green};
           color: ${C.white};
           border: none;
-          border-radius: 50px;
+          border-radius: 15px;
           padding: 10px 22px;
           font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
           font-weight: 800;
@@ -148,7 +148,7 @@ export function Navbar() {
           background: transparent;
           color: ${C.navy};
           border: 2px solid ${C.navy};
-          border-radius: 50px;
+          border-radius: 15px;
           padding: 8px 18px;
           font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
           font-weight: 800;
@@ -178,17 +178,8 @@ export function Navbar() {
       <nav className="navbar-wrap">
         <div className="navbar-inner">
           {/* Logo - Stays Left */}
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div className="logo-box">
-                <span className="logo-sign">Si<span className="g">G</span>N</span>
-                <span className="logo-service">SERVICE</span>
-              </div>
-              <div className="logo-pro-wrap">
-                <span className="logo-pro">PRO</span>
-                <span className="logo-tagline">Building Signs That Build Brands</span>
-              </div>
-            </div>
+          <Link to="/" style={{ textDecoration: 'none', width: "120px" }}>
+            <img src="/logo.png" alt="SiGn Service PRO logo" style={{ width: "100%", height: "auto" }} />
           </Link>
 
           {/* Right Group: Links + CTAs - Floats Right */}
