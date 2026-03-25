@@ -10,8 +10,18 @@ const pulse = keyframes`
 const FooterBillboardContainer = styled.div`
   width: 100%;
   position: relative;
+  /* Desktop stays full screen */
   height: 100vh; 
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  @media (max-width: 768px) {
+    /* Reduced height for mobile screens */
+    height: 60vh; 
+    min-height: 450px; /* Ensures it doesn't get too squashed on very small phones */
+  }
 `;
 
 const BackgroundLayer = styled.div`
@@ -26,26 +36,32 @@ const BackgroundLayer = styled.div`
   &::before {
     content: '';
     position: absolute;
-    top: -2%; 
-    left: -2%;
-    width: 104%;
-    height: 104%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('footerbackground.png');
-    background-size: 100% 100%; 
-    background-position: center;
+    background-size: cover; 
+    background-position: center bottom;
     background-repeat: no-repeat;
-    filter: blur(8px); 
+    filter: blur(4px);
   }
 `;
 
 const BillboardPositioner = styled.div`
   position: absolute;
-  top: 50%;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: 85%; 
   max-width: 1400px;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    /* Increased width to stay prominent at the lower height */
+    width: 140%; 
+    bottom: -5px; 
+  }
 `;
 
 const BillboardImage = styled.img`
@@ -55,17 +71,21 @@ const BillboardImage = styled.img`
   filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.5));
 `;
 
-// --- UPDATED UI: ICON OUTSIDE BUBBLE ---
-
 const ChatWrapper = styled.div`
   position: absolute;
   top: 40px;
   right: 5%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Aligns bubble and icon to the right */
+  align-items: flex-end;
   gap: 12px;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    top: 20px;
+    right: 20px;
+    transform: scale(0.9); /* Slightly smaller UI to match lower section height */
+  }
 `;
 
 const TalkToAiButton = styled.a`
@@ -73,33 +93,16 @@ const TalkToAiButton = styled.a`
   align-items: center;
   text-decoration: none;
   background: white;
-  padding: 12px 20px;
+  padding: 10px 18px;
   border-radius: 18px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   position: relative;
-  transition: transform 0.3s ease;
-
-  // &:hover {
-  //   transform: translateY(-5px);
-  // }
-
-  /* Chat bubble tail pointing DOWN to the icon */
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    right: 15px;
-    width: 15px;
-    height: 15px;
-    // background: white;
-    transform: rotate(45deg);
-  }
 `;
 
 const TalkText = styled.span`
   font-family: 'Inter', sans-serif, Arial;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   color: #333;
 `;
 
@@ -124,19 +127,28 @@ const SignProIcon = styled.div`
   }
 `;
 
-// --- END UPDATED UI ---
-
 const FooterLinks = styled.div`
   position: absolute;
-  bottom: 20px;
+  bottom: 12px;
   width: 100%;
   padding: 0 5%;
   display: flex;
   justify-content: space-between;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-family: Arial, sans-serif;
-  font-size: 12px;
-  z-index: 5;
+  font-size: 10px;
+  z-index: 15;
+  /* Darker gradient at bottom for text readability on mobile */
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    bottom: 8px;
+    font-size: 9px;
+  }
 `;
 
 const FooterBillboard = () => {
@@ -160,7 +172,7 @@ const FooterBillboard = () => {
           Privacy Policy | Your Privacy Choices
         </div>
         <div>
-          © 2025 SIGN SERVICE PRO . All rights Reserved. &nbsp; 
+          © 2026 SIGN SERVICE PRO. All rights Reserved. &nbsp; 
           <span style={{color: '#7ed321'}}>Web Design</span> By Latin Branding
         </div>
       </FooterLinks>

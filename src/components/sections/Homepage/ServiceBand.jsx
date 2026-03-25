@@ -6,34 +6,30 @@ export function ServiceBand() {
 
   return (
     <section style={{
-      padding: "24px 0 0", // Top padding gives space above the green box
+      padding: "24px 0 0", 
       position: "relative",
     }}>
       <style>{`
-        /* --- Service Band Inner Green Box --- */
         .service-band-inner {
           background: ${C.green};
           border-radius: 40px;
-          padding: 80px 60px; /* Adjust padding for content alignment */
-          position: "relative",
+          padding: 80px 60px;
+          position: relative; /* Fixed: was a string in your original code */
           max-width: 1200px;
           margin: 0 auto;
         }
 
-        /* --- Content Container --- */
         .service-content {
-          max-width: 600px; /* Adjust as needed */
+          max-width: 600px;
         }
 
-        /* --- Image Positioned Absolutely --- */
         .service-band-image {
           position: absolute;
           bottom: 0;
-          right: 20px; /* Adjust as needed */
+          right: 20px;
           z-index: 10;
         }
 
-        /* --- Button Styling --- */
         .btn-upgrade {
           background: ${C.white};
           color: ${C.green};
@@ -51,42 +47,48 @@ export function ServiceBand() {
           background: rgba(255, 255, 255, 0.85);
         }
 
-        /* --- Responsive Styles --- */
         @media (max-width: 1024px) {
           .service-band-inner {
             padding: 60px 40px;
           }
-
           .service-content {
             max-width: 500px;
           }
-
           .service-band-image img {
-            max-width: 320px; /* Reduce image size for smaller screens */
+            max-width: 280px !important;
           }
         }
 
         @media (max-width: 767px) {
           .service-band-inner {
-            padding: 40px 24px 340px; /* Add bottom padding to prevent overlap with the content */
+            padding: 40px 24px 0; /* Remove massive bottom padding */
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .service-content {
+            max-width: 100%;
+            margin-bottom: 40px; /* Space between text and image */
           }
 
           .service-band-image {
-            right: 0;
-            left: 0;
-            margin: 0 auto;
+            position: relative; /* Switch from absolute to relative to prevent overlap */
+            right: auto;
+            bottom: 0;
+            width: 100%;
             display: flex;
             justify-content: center;
           }
 
           .service-band-image img {
-            max-width: 100%; /* Image is full width of content or slightly smaller */
+            max-width: 260px !important; /* Controlled size so it doesn't look huge */
+            margin: 0 auto;
           }
         }
       `}</style>
 
-      {/* --- Section Background Elements --- */}
       <div className="service-band-inner fade-up" ref={ref}>
         <div className="service-content">
           <h2 style={{
@@ -118,11 +120,10 @@ export function ServiceBand() {
           </a>
         </div>
 
-        {/* --- Team Image (Positioned Absolute) --- */}
         <div className="service-band-image">
           <img 
-            src="/teamphoto.png" // Pointing to public folder
-            alt="Smiling service team member with arms crossed" 
+            src="/teamphoto.png"
+            alt="Smiling service team member" 
             style={{ display: "block", maxWidth: "320px", height: "auto" }}
           />
         </div>

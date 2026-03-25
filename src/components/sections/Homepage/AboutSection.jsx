@@ -6,7 +6,6 @@ export function AboutSection() {
   const ref = useFadeUp();
 
   return (
-    /* We remove overflow: hidden from here so the head can stick out */
     <section style={{ background: C.navy, padding: "0", position: "relative" }}>
       <style>{`
         .about-layout {
@@ -41,12 +40,36 @@ export function AboutSection() {
           text-transform: uppercase;
           font-size: 14px;
         }
-        @media(max-width:800px){
+
+        /* Responsive Fixes */
+        @media(max-width: 800px) {
           .about-layout { 
             grid-template-columns: 1fr; 
             text-align: center;
+            padding-top: 100px; /* Space for the floating head */
           }
-          .person-container { margin-top: 0; }
+          .person-container { 
+            margin: 0 auto;
+            max-width: 320px; /* Limits photo size on mobile */
+          }
+          .person-photo {
+            margin-top: -120px !important; /* Pulls head up on mobile specifically */
+          }
+          .about-content {
+            padding: 40px 0 !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .about-btns {
+            justify-content: center;
+          }
+          .map-tooltip {
+            right: 20px !important;
+            left: 20px !important;
+            bottom: 20px !important;
+            text-align: center;
+          }
         }
       `}</style>
 
@@ -56,24 +79,24 @@ export function AboutSection() {
           <img 
             src="/photo_team.png" 
             alt="Team Member" 
+            className="person-photo"
             style={{
               width: "100%",
               height: "auto",
               display: "block",
-              /* This negative margin pulls the head up out of the navy box */
               marginTop: "-100px", 
             }}
           />
         </div>
 
         {/* Content */}
-        <div style={{ padding: "60px 0" }}>
+        <div className="about-content" style={{ padding: "60px 0" }}>
           <h2 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontWeight: 900, 
             fontSize: "clamp(60px, 8vw, 100px)",
             textTransform: "uppercase", 
-            color: "#F0F5E9", // Slightly off-white like the image
+            color: "#F0F5E9",
             lineHeight: 0.9, 
             marginBottom: 20
           }}>ABOUT US</h2>
@@ -93,9 +116,9 @@ export function AboutSection() {
             We do not design or fabricate signs. We specialize exclusively in installation and service for sign companies.
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 15 }}>
-            <a href="#quote" className="btn btn-green">GET A QUOTE</a>
-            <a href="tel:+1234567890" className="btn btn-outline-white">
+          <div className="about-btns" style={{ display: "flex", flexWrap: "wrap", gap: 15 }}>
+            <a href="#quote" className="btn-green">GET A QUOTE</a>
+            <a href="tel:+1234567890" className="btn-outline-white">
               <PhoneIcon /> CALL US NOW
             </a>
           </div>
@@ -110,7 +133,6 @@ export function AboutSection() {
         position: "relative", 
         overflow: "hidden"
       }}>
-        {/* Map Image - Replacing the text placeholder */}
         <div style={{
           position: "absolute", 
           inset: 0,
@@ -124,8 +146,8 @@ export function AboutSection() {
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "cover", // This ensures the map fills the area nicely
-              opacity: 0.8 // Optional: keeps it subtle behind the overlays
+              objectFit: "cover",
+              opacity: 0.8 
             }} 
           />
         </div>
@@ -134,7 +156,7 @@ export function AboutSection() {
         <div style={{
           position: "absolute",
           top: "50%", 
-          left: "55%",
+          left: "50%", // Centered for better mobile visibility
           transform: "translate(-50%,-50%)",
           width: 260, 
           height: 260,
@@ -145,15 +167,15 @@ export function AboutSection() {
         }} />
 
         {/* Tooltip */}
-        <div style={{
+        <div className="map-tooltip" style={{
           position: "absolute", 
           bottom: 40, 
           right: 60,
-          background: C.white, 
+          background: "white", 
           borderRadius: 6, 
           padding: "10px 16px",
           fontSize: 13, 
-          color: C.textDark, 
+          color: "#333", 
           fontWeight: 500,
           boxShadow: "0 4px 16px rgba(0,0,0,.12)",
           zIndex: 2

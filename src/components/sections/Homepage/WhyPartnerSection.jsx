@@ -30,15 +30,16 @@ export function WhyPartnerSection() {
   const ref2 = useFadeUp();
 
   return (
-    <section style={{ background: C.cream, padding: "100px 0 0" }}>
+    <section className="wp-section">
       <style>{`
+        .wp-section {
+          background: ${C.cream};
+          padding: 100px 0 0;
+        }
         .wp-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 20px;
-        }
-        @media(max-width:767px){
-          .wp-grid { grid-template-columns: 1fr; }
         }
         .wp-layout {
           display: grid;
@@ -49,12 +50,34 @@ export function WhyPartnerSection() {
           margin: 0 auto;
           padding: 0 24px;
         }
-        @media(max-width:1024px){
-          .wp-layout { grid-template-columns: 1fr; }
+        
+        /* Mobile & Tablet Adjustments */
+        @media(max-width: 1024px) {
+          .wp-layout { 
+            grid-template-columns: 1fr; 
+            gap: 32px;
+          }
+        }
+
+        @media(max-width: 767px) {
+          .wp-section {
+            padding: 60px 0 40px !important;
+          }
+          .wp-grid { 
+            grid-template-columns: 1fr; 
+          }
+          .wp-header {
+            margin-bottom: 40px !important;
+            padding: 0 20px;
+          }
+          .feat-card {
+            text-align: center;
+            padding: 10px 0;
+          }
         }
       `}</style>
 
-      <div style={{ textAlign: "center", marginBottom: 64 }} className="fade-up" ref={ref1}>
+      <div className="wp-header fade-up" style={{ textAlign: "center", marginBottom: 64 }} ref={ref1}>
         <h2 style={{
           fontFamily: "'Barlow Condensed', sans-serif",
           fontWeight: 900, fontSize: "clamp(36px,5vw,56px)",
@@ -65,8 +88,7 @@ export function WhyPartnerSection() {
       </div>
 
       <div className="wp-layout fade-up" ref={ref2}>
-        {/* Photo collage */}
-        <div style={{ position: "relative", height: 420 }} className="hide-tablet">
+        <div style={{ position: "relative", height: 420 }}>
           <div style={{
             position: "absolute", top: 0, left: 60, right: 0,
             height: 240, borderRadius: 12, overflow: "hidden",
