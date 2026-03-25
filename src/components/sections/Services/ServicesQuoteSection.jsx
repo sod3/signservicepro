@@ -1,32 +1,72 @@
 import { useState } from "react";
-import {C} from "../../../styles/designTokens";
-import {useFadeUp} from "../../../hooks/useFadeUp";
-import { PhoneIcon } from "../../ui/Icons";
+import { C } from '../../../styles/designTokens';
+import { useFadeUp } from '../../../hooks/useFadeUp';
+import { PhoneIcon, UploadIcon } from '../../ui/Icons';
+import { Link } from "react-router-dom";
+import styled, { keyframes } from 'styled-components';
 
-/* ─── Form fields for the Services page quote form ───────────────────────────── */
-const formFields = [
-  { label: "Full Name",    name: "name",    ph: "Your full name",   type: "text"  },
-  { label: "Phone Number", name: "phone",   ph: "Your phone number",type: "tel"   },
-  { label: "Email",        name: "email",   ph: "Your email address",type: "email" },
-  { label: "Message",      name: "message", ph: "Tell us about your project...", type: "textarea" },
-];
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+`;
 
-/* ─── Services Quote Section ─────────────────────────────────────────────────── */
+const SignProIcon = styled.div`
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #7ed321 0%, #58a74e 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(126, 211, 33, 0.4);
+  animation: ${pulse} 3s infinite ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: 35px;
+  
+  &::before {
+    content: '✦'; 
+    color: white;
+    font-size: 22px;
+  }
+`;
+
 function ServicesQuoteSection() {
-  const ref  = useFadeUp();
-  const [form, setForm] = useState(
-    Object.fromEntries(formFields.map(f => [f.name, ""]))
-  );
+  const ref = useFadeUp();
+  const [form, setForm] = useState({
+    company: "", contact: "", details: "", services: "", timeline: ""
+  });
 
-  const handleChange = e =>
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const handleSubmit = () => alert("Quote request submitted!");
+  const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
 
   return (
-    <section id="quote" style={{ background: C.cream, padding: "80px 0 100px" }}>
+    <section 
+      id="quote" 
+      style={{ 
+        position: 'relative', 
+        overflow: 'hidden',   
+        backgroundColor: C.cream, 
+        padding: "100px 24px 60px 24px" 
+      }}
+    >
       <style>{`
-        .sq-layout {
+        #quote::before {
+          content: "";
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background-image: url('/footerbackground.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          filter: brightness(1.2) blur(6px); 
+          transform: scale(1.1); 
+          z-index: 0;
+        }
+
+        .quote-layout {
+          position: relative; 
+          z-index: 1;
           max-width: 1100px;
           margin: 0 auto;
           padding: 0 24px;
@@ -35,95 +75,129 @@ function ServicesQuoteSection() {
           gap: 80px;
           align-items: center;
         }
-        @media(max-width:1024px){
-          .sq-layout { grid-template-columns: 1fr; gap: 40px; }
-        }
 
-        /* Services page textarea */
-        .sq-textarea {
+        .quote-input {
           width: 100%;
-          background: rgba(255,255,255,.12);
-          border: 1.5px solid rgba(255,255,255,.25);
-          border-radius: 6px;
-          padding: 11px 14px;
-          color: ${C.white};
-          font-family: 'Barlow', sans-serif;
-          font-size: 14px;
-          resize: vertical;
-          min-height: 120px;
-          transition: border-color .2s;
+          padding: 12px;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.1);
           outline: none;
         }
-        .sq-textarea::placeholder { color: rgba(255,255,255,.45); }
-        .sq-textarea:focus        { border-color: ${C.green}; }
+
+        /* IMPROVED VISIBILITY FOR FOOTER TEXT */
+        .footer-bottom-text {
+          position: relative;
+          z-index: 1;
+          max-width: 1100px;
+          margin: 80px auto 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 20px;
+          color: #ffffff; /* Switched to white for better contrast */
+          font-size: 14px;
+          font-weight: 500;
+          text-shadow: 0px 2px 4px rgba(0,0,0,0.5); /* Shadow for legibility */
+          border-top: 1px solid rgba(255,255,255,0.2);
+          padding: 24px 10px;
+        }
+
+        .footer-bottom-text a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* AI Bubble Styles */
+        .ai-chat-container {
+            position: absolute;
+            bottom: 150px;
+            right: 40px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .ai-bubble {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-weight: 800;
+            color: #8CC63F; 
+            font-size: 18px;
+            position: relative;
+        }
+
+        .ai-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 25px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        @media(max-width:1024px){
+          .quote-layout { grid-template-columns: 1fr; gap: 40px; }
+          .footer-bottom-text { justify-content: center; text-align: center; font-size: 12px; }
+          .ai-chat-container { right: 20px; bottom: 40px; }
+        }
       `}</style>
 
-      <div className="sq-layout fade-up" ref={ref}>
-
-        {/* ── Left: logo + tagline + cities + avatars ─────────────── */}
+      <div className="quote-layout fade-up" ref={ref}>
+        {/* Left: tagline + cities */}
         <div>
-          {/* Logo block */}
           <div style={{
             display: "inline-flex", alignItems: "baseline", gap: 6,
-            background: C.navy, borderRadius: 8, padding: "10px 18px",
-            marginBottom: 28,
+            marginBottom: 28
           }}>
-            <span style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 900, fontSize: 22, color: C.white,
-            }}>
-              Si<span style={{ color: C.green }}>G</span>N
-            </span>
-            <div>
-              <div style={{
-                fontSize: 10, fontWeight: 700, color: C.green,
-                letterSpacing: 1.5, textTransform: "uppercase",
-              }}>SERVICE</div>
-              <div style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 900, fontSize: 22, color: C.white, lineHeight: 1,
-              }}>PRO</div>
-              <div style={{
-                fontSize: 7, fontWeight: 600, color: C.green,
-                letterSpacing: 1.2, textTransform: "uppercase", marginTop: 2,
-              }}>Building Signs That Build Brands</div>
-            </div>
+          <Link to="/">
+            <img src="/logo.png" alt="SiGn Service PRO logo" style={{ width: "300px", height: "auto" }} />
+          </Link>
           </div>
 
           <h2 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 900, fontSize: "clamp(40px,5vw,60px)",
-            color: C.navy, lineHeight: 1.05, marginBottom: 20,
+            fontWeight: 900, fontSize: "clamp(40px,5vw,64px)",
+            color: C.navy, lineHeight: 1.05, marginBottom: 20
           }}>
-            Building Signs that<br />Build Brands
+            Building Signs that Build Brands
           </h2>
 
-          <p style={{ fontSize: 14, color: C.textGray, marginBottom: 24, lineHeight: 1.65 }}>
-            Troy • Piqua • Sidney • Lima • Springfield • Englewood •<br />
+          <p style={{
+            fontSize: 14, color: C.textDark, marginBottom: 24,
+            lineHeight: 1.65
+          }}>
+            Troy • Piqua • Sidney • Lima • Springfield • Englewood •
             Beavercreek • Tipp City • Vandalia • Centerville • Huber Heights
           </p>
 
-          {/* Avatar stack + star rating */}
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
             <div style={{ display: "flex" }}>
-              {[0,1,2,3,4].map(i => (
+              {["icon", "icon1", "icon2", "icon3", "icon4"].map((iconName, i) => (
                 <div key={i} style={{
-                  width: 40, height: 40, borderRadius: "50%",
+                  width: 38, height: 38, borderRadius: "50%",
                   border: "2.5px solid white",
-                  background: `hsl(${i * 40 + 180}, 30%, 55%)`,
-                  marginLeft: i > 0 ? -12 : 0,
+                  background: "#eee",
+                  marginLeft: i > 0 ? -10 : 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "#fff", fontSize: 12, fontWeight: 700,
-                  boxShadow: "0 2px 8px rgba(0,0,0,.12)",
+                  overflow: "hidden"
                 }}>
-                  {/* Replace with <img> avatars */}
-                  {String.fromCharCode(65 + i)}
+                  <img 
+                    src={`/icon/${iconName}.png`} 
+                    alt={`client-${i}`} 
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                  />
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", gap: 3 }}>
+            <div style={{ display: "flex", gap: 2 }}>
               {[0,1,2,3,4].map(i => (
-                <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B">
+                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
               ))}
@@ -132,66 +206,87 @@ function ServicesQuoteSection() {
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a href="#quote" className="btn btn-green">Get a Quote</a>
-            <a href="tel:+1234567890" className="btn btn-navy">
+            <a href="tel:+1234567890" className="btn btn-navy" style={{
+              background: "#EFF7E2",
+              color: C.textDark,
+              border: "2px solid #000",
+              borderRadius: 10,
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px 20px"
+            }}>
               <PhoneIcon /> Call Us Now
             </a>
           </div>
         </div>
 
-        {/* ── Right: free estimate form ────────────────────────────── */}
+        {/* Right: form card */}
         <div style={{
           background: C.navy, borderRadius: 16,
-          padding: "36px 32px",
-          boxShadow: "0 20px 60px rgba(13,27,46,.18)",
+          padding: "40px 36px",
+          boxShadow: "0 20px 60px rgba(13,27,46,.2)"
         }}>
           <h3 style={{
-            fontFamily: "'Barlow', sans-serif",
-            fontWeight: 400, fontSize: 22,
+            fontFamily: "'Barlow Condensed', sans-serif",
+            fontWeight: 700, fontSize: 40,
             color: C.white, textAlign: "center",
-            marginBottom: 28,
+            marginBottom: 28, letterSpacing: ".02em"
           }}>
-            Get Your <span style={{ color: C.green, fontWeight: 700 }}>Free<br />Estimate Today!</span>
+            GET YOUR <span style={{ color: C.green }}>Free Estimate Today!</span>
           </h3>
 
-          {formFields.map(field => (
-            <div key={field.name} style={{ marginBottom: 14 }}>
+          {[
+            { label: "Full Name", name: "fullName", ph: "Your full name" },
+            { label: "Phone Number", name: "phoneNumber", ph: "Your phone number (123) 456-7890" },
+            { label: "Email", name: "email", ph: "Your email address" },
+            { label: "Message", name: "message", ph: "Your message", style: { height: 120 } },
+          ].map(field => (
+            <div key={field.name} style={{ marginBottom: 16 }}>
               <label style={{
                 display: "block", fontSize: 12, fontWeight: 600,
-                color: "rgba(255,255,255,.65)", marginBottom: 5,
-                letterSpacing: ".06em",
-              }}>
-                {field.label}
-              </label>
-              {field.type === "textarea" ? (
-                <textarea
-                  name={field.name}
-                  placeholder={field.ph}
-                  value={form[field.name]}
-                  onChange={handleChange}
-                  className="sq-textarea"
-                />
-              ) : (
-                <input
-                  type={field.type}
-                  name={field.name}
-                  placeholder={field.ph}
-                  value={form[field.name]}
-                  onChange={handleChange}
-                  className="quote-input"
-                />
-              )}
+                color: "rgba(255,255,255,.65)", marginBottom: 6,
+                letterSpacing: ".06em"
+              }}>{field.label}</label>
+              <textarea
+                name={field.name}
+                placeholder={field.ph}
+                style={{
+                  backgroundColor: "white",
+                  ...field.style,
+                }}
+                value={form[field.name]}
+                onChange={handleChange}
+                className="quote-input"
+              />
             </div>
           ))}
 
-          <button
-            className="btn btn-green"
-            style={{ width: "100%", justifyContent: "center", marginTop: 8, fontSize: 13 }}
-            onClick={handleSubmit}
-          >
-            Get a Quote
-          </button>
+          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+            <button
+              className="btn btn-green"
+              style={{ flex: 1, justifyContent: "center", fontSize: 13, border: "none", cursor: "pointer" }}
+              onClick={() => alert("Quote request submitted!")}
+            >
+              Get a Quote
+            </button>
+          </div>
         </div>
+      </div>
 
+      {/* FOOTER TEXT WITH UPDATED CONTRAST */}
+      <div className="footer-bottom-text">
+        <div>Privacy Policy | Your Privacy Choices</div>
+        <div>© 2025 SIGN SERVICE PRO . All rights Reserved.</div>
+        <div>
+          <span style={{ color: '#ADFF2F', fontWeight: '700' }}>Web Design</span> By Latin Branding
+        </div>
+      </div>
+
+      {/* AI CHAT WITH HIGHER CONTRAST */}
+      <div className="ai-chat-container">
+          <div className="ai-bubble">Talk to our AI</div>
+          <SignProIcon />
       </div>
     </section>
   );

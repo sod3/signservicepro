@@ -30,9 +30,6 @@ function OurServicesPage() {
         {/* 5. Logo left / estimate form right */}
         <ServicesQuoteSection />
       </main>
-
-      {/* 6. Dusk city footer */}
-      <ServicesFooter />
     </>
   );
 }
