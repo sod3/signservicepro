@@ -10,10 +10,8 @@ function ServicesHeroSection() {
       alignItems: "center",
       justifyContent: "center",
       position: "relative",
-      overflow: "visible",
-      padding: "100px 20px 0 20px",
-      textAlign: "center",
-      backgroundColor: "#fff" // Add white background to section
+      overflow: "hidden", // Changed to hidden to prevent scrollbar issues with scaled backgrounds
+      backgroundColor: "#fff"
     }}>
       <style>{`
         .hero-container {
@@ -21,7 +19,7 @@ function ServicesHeroSection() {
           inset: 0;
           clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
           -webkit-clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
-          z-index: 0; /* Changed from -1 to 0 */
+          z-index: 0;
           overflow: hidden;
         }
 
@@ -40,47 +38,60 @@ function ServicesHeroSection() {
           position: absolute;
           inset: 0;
           background: rgba(14, 30, 56, 0.1); 
-          z-index: 0;
+          z-index: 1;
+        }
+
+        /* Centering Wrapper */
+        .hero-inner-wrapper {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          z-index: 2;
+          padding: 80px 24px; /* Space for mobile headers */
         }
 
         .hero-content {
-          position: relative;
-          z-index: 2;
-          max-width: 900px;
+          max-width: 1000px;
+          width: 100%;
           margin: 0 auto;
-          margin-bottom: 100px;
+          text-align: center;
         }
 
         .hero-top-text {
           font-family: 'Ubuntu Sans', sans-serif;
-          font-size: 18px;
+          font-size: clamp(14px, 2vw, 18px); /* Responsive sizing */
           font-weight: 700;
           color: ${C.navy};
           text-transform: uppercase;
-          letter-spacing: 1px;
-          margin-bottom: 20px;
+          letter-spacing: 1.5px;
+          margin-bottom: clamp(12px, 3vw, 20px);
         }
 
         .hero-main-title {
           font-family: 'Ubuntu Sans', sans-serif;
-          font-size: clamp(32px, 5vw, 64px);
+          /* Fluid typography: Min 30px, Scales with width, Max 64px */
+          font-size: clamp(30px, 6vw, 64px); 
           font-weight: 900;
           color: ${C.navy};
           line-height: 1.1;
-          margin-bottom: 30px;
+          margin-bottom: clamp(20px, 4vw, 35px);
           text-transform: uppercase;
+          word-wrap: break-word;
         }
 
         .hero-tagline {
           display: inline-block;
           background: ${C.navy};
           color: #fff;
-          padding: 10px 24px;
+          padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 32px);
           border-radius: 50px;
-          font-size: 12px;
+          font-size: clamp(10px, 1.5vw, 13px);
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 1px;
+          line-height: 1.4;
         }
 
         .ticker-wrapper {
@@ -88,8 +99,14 @@ function ServicesHeroSection() {
           position: relative;
           z-index: 3;
           background: white;
-          margin-top: auto;
           padding: 20px 0;
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+          .hero-container {
+            clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+          }
         }
       `}</style>
 
@@ -97,13 +114,15 @@ function ServicesHeroSection() {
         <div className="hero-overlay" />
       </div>
 
-      <div className="hero-content">
-        <p className="hero-top-text">Complete Sign Solutions - Installation, Maintenance & Repair</p>
-        <h1 className="hero-main-title">
-          From Channel Letters to LED Displays, Our Certified Crews Deliver Precision, Safety, and Impact.
-        </h1>
-        <div className="hero-tagline">
-          Enhance your visibility today with professional sign services.
+      <div className="hero-inner-wrapper">
+        <div className="hero-content">
+          <p className="hero-top-text">Complete Sign Solutions - Installation, Maintenance & Repair</p>
+          <h1 className="hero-main-title">
+            From Channel Letters to LED Displays, Our Certified Crews Deliver Precision, Safety, and Impact.
+          </h1>
+          <div className="hero-tagline">
+            Enhance your visibility today with professional sign services.
+          </div>
         </div>
       </div>
 

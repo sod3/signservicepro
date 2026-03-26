@@ -35,7 +35,7 @@ const SignProIcon = styled.div`
 function ServicesQuoteSection() {
   const ref = useFadeUp();
   const [form, setForm] = useState({
-    company: "", contact: "", details: "", services: "", timeline: ""
+    fullName: "", phoneNumber: "", email: "", message: ""
   });
 
   const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
@@ -69,11 +69,17 @@ function ServicesQuoteSection() {
           z-index: 1;
           max-width: 1100px;
           margin: 0 auto;
-          padding: 0 24px;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 80px;
           align-items: center;
+        }
+
+        .form-card {
+          background: ${C.navy}; 
+          border-radius: 16px;
+          padding: 40px 36px;
+          box-shadow: 0 20px 60px rgba(13,27,46,.2);
         }
 
         .quote-input {
@@ -82,9 +88,9 @@ function ServicesQuoteSection() {
           border-radius: 8px;
           border: 1px solid rgba(255,255,255,0.1);
           outline: none;
+          box-sizing: border-box; /* Ensures padding doesn't break width */
         }
 
-        /* IMPROVED VISIBILITY FOR FOOTER TEXT */
         .footer-bottom-text {
           position: relative;
           z-index: 1;
@@ -95,20 +101,14 @@ function ServicesQuoteSection() {
           align-items: center;
           flex-wrap: wrap;
           gap: 20px;
-          color: #ffffff; /* Switched to white for better contrast */
+          color: #ffffff; 
           font-size: 14px;
           font-weight: 500;
-          text-shadow: 0px 2px 4px rgba(0,0,0,0.5); /* Shadow for legibility */
+          text-shadow: 0px 2px 4px rgba(0,0,0,0.5); 
           border-top: 1px solid rgba(255,255,255,0.2);
           padding: 24px 10px;
         }
 
-        .footer-bottom-text a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* AI Bubble Styles */
         .ai-chat-container {
             position: absolute;
             bottom: 150px;
@@ -141,37 +141,58 @@ function ServicesQuoteSection() {
             border-top: 10px solid white;
         }
 
+        /* MOBILE OVERRIDES */
         @media(max-width:1024px){
-          .quote-layout { grid-template-columns: 1fr; gap: 40px; }
-          .footer-bottom-text { justify-content: center; text-align: center; font-size: 12px; }
-          .ai-chat-container { right: 20px; bottom: 40px; }
+          .quote-layout { 
+            grid-template-columns: 1fr; 
+            gap: 50px; 
+            padding: 0;
+          }
+          
+          .form-card {
+            padding: 30px 20px; /* Slimmer padding for mobile */
+          }
+
+          .form-card h3 {
+            font-size: 30px !important; /* Smaller heading on mobile */
+          }
+
+          .footer-bottom-text { 
+            justify-content: center; 
+            text-align: center; 
+            flex-direction: column;
+            font-size: 12px; 
+            margin-top: 40px;
+          }
+
+          .ai-chat-container { 
+            display: none; /* Hide AI bubble on mobile to save space, or reduce size */
+          }
+
+          .logo-img {
+            width: 220px !important;
+          }
         }
       `}</style>
 
       <div className="quote-layout fade-up" ref={ref}>
-        {/* Left: tagline + cities */}
+        {/* Left Content */}
         <div>
-          <div style={{
-            display: "inline-flex", alignItems: "baseline", gap: 6,
-            marginBottom: 28
-          }}>
-          <Link to="/">
-            <img src="/logo.png" alt="SiGn Service PRO logo" style={{ width: "300px", height: "auto" }} />
-          </Link>
+          <div style={{ marginBottom: 28 }}>
+            <Link to="/">
+              <img src="/logo.png" alt="logo" className="logo-img" style={{ width: "300px", height: "auto" }} />
+            </Link>
           </div>
 
           <h2 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 900, fontSize: "clamp(40px,5vw,64px)",
+            fontWeight: 900, fontSize: "clamp(34px, 5vw, 64px)",
             color: C.navy, lineHeight: 1.05, marginBottom: 20
           }}>
             Building Signs that Build Brands
           </h2>
 
-          <p style={{
-            fontSize: 14, color: C.textDark, marginBottom: 24,
-            lineHeight: 1.65
-          }}>
+          <p style={{ fontSize: 14, color: C.textDark, marginBottom: 24, lineHeight: 1.65 }}>
             Troy • Piqua • Sidney • Lima • Springfield • Englewood •
             Beavercreek • Tipp City • Vandalia • Centerville • Huber Heights
           </p>
@@ -181,17 +202,11 @@ function ServicesQuoteSection() {
               {["icon", "icon1", "icon2", "icon3", "icon4"].map((iconName, i) => (
                 <div key={i} style={{
                   width: 38, height: 38, borderRadius: "50%",
-                  border: "2.5px solid white",
-                  background: "#eee",
-                  marginLeft: i > 0 ? -10 : 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  overflow: "hidden"
+                  border: "2.5px solid white", background: "#eee",
+                  marginLeft: i > 0 ? -10 : 0, display: "flex", alignItems: "center", 
+                  justifyContent: "center", overflow: "hidden"
                 }}>
-                  <img 
-                    src={`/icon/${iconName}.png`} 
-                    alt={`client-${i}`} 
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }} 
-                  />
+                  <img src={`/icon/${iconName}.png`} alt={`client-${i}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
               ))}
             </div>
@@ -207,26 +222,16 @@ function ServicesQuoteSection() {
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a href="#quote" className="btn btn-green">Get a Quote</a>
             <a href="tel:+1234567890" className="btn btn-navy" style={{
-              background: "#EFF7E2",
-              color: C.textDark,
-              border: "2px solid #000",
-              borderRadius: 10,
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "10px 20px"
+              background: "#EFF7E2", color: C.textDark, border: "2px solid #000",
+              borderRadius: 10, display: "flex", alignItems: "center", gap: "8px", padding: "10px 20px"
             }}>
               <PhoneIcon /> Call Us Now
             </a>
           </div>
         </div>
 
-        {/* Right: form card */}
-        <div style={{
-          background: C.navy, borderRadius: 16,
-          padding: "40px 36px",
-          boxShadow: "0 20px 60px rgba(13,27,46,.2)"
-        }}>
+        {/* Form Card */}
+        <div className="form-card">
           <h3 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontWeight: 700, fontSize: 40,
@@ -237,44 +242,51 @@ function ServicesQuoteSection() {
           </h3>
 
           {[
-            { label: "Full Name", name: "fullName", ph: "Your full name" },
-            { label: "Phone Number", name: "phoneNumber", ph: "Your phone number (123) 456-7890" },
-            { label: "Email", name: "email", ph: "Your email address" },
-            { label: "Message", name: "message", ph: "Your message", style: { height: 120 } },
+            { label: "Full Name", name: "fullName", ph: "Your full name", type: "input" },
+            { label: "Phone Number", name: "phoneNumber", ph: "(123) 456-7890", type: "input" },
+            { label: "Email", name: "email", ph: "Your email address", type: "input" },
+            { label: "Message", name: "message", ph: "Your message", type: "textarea", style: { height: 100 } },
           ].map(field => (
             <div key={field.name} style={{ marginBottom: 16 }}>
               <label style={{
-                display: "block", fontSize: 12, fontWeight: 600,
+                display: "block", fontSize: 11, fontWeight: 600,
                 color: "rgba(255,255,255,.65)", marginBottom: 6,
-                letterSpacing: ".06em"
+                letterSpacing: ".06em", textTransform: "uppercase"
               }}>{field.label}</label>
-              <textarea
-                name={field.name}
-                placeholder={field.ph}
-                style={{
-                  backgroundColor: "white",
-                  ...field.style,
-                }}
-                value={form[field.name]}
-                onChange={handleChange}
-                className="quote-input"
-              />
+              
+              {field.type === "textarea" ? (
+                <textarea
+                  name={field.name}
+                  placeholder={field.ph}
+                  style={{ backgroundColor: "white", ...field.style }}
+                  value={form[field.name]}
+                  onChange={handleChange}
+                  className="quote-input"
+                />
+              ) : (
+                <input
+                  type="text"
+                  name={field.name}
+                  placeholder={field.ph}
+                  style={{ backgroundColor: "white" }}
+                  value={form[field.name]}
+                  onChange={handleChange}
+                  className="quote-input"
+                />
+              )}
             </div>
           ))}
 
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-            <button
-              className="btn btn-green"
-              style={{ flex: 1, justifyContent: "center", fontSize: 13, border: "none", cursor: "pointer" }}
-              onClick={() => alert("Quote request submitted!")}
-            >
-              Get a Quote
-            </button>
-          </div>
+          <button
+            className="btn btn-green"
+            style={{ width: "100%", justifyContent: "center", fontSize: 14, border: "none", cursor: "pointer", marginTop: 10 }}
+            onClick={() => alert("Quote request submitted!")}
+          >
+            Get a Quote
+          </button>
         </div>
       </div>
 
-      {/* FOOTER TEXT WITH UPDATED CONTRAST */}
       <div className="footer-bottom-text">
         <div>Privacy Policy | Your Privacy Choices</div>
         <div>© 2025 SIGN SERVICE PRO . All rights Reserved.</div>
@@ -283,7 +295,6 @@ function ServicesQuoteSection() {
         </div>
       </div>
 
-      {/* AI CHAT WITH HIGHER CONTRAST */}
       <div className="ai-chat-container">
           <div className="ai-bubble">Talk to our AI</div>
           <SignProIcon />

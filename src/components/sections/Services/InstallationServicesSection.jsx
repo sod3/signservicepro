@@ -3,7 +3,6 @@ import { C } from "../../../styles/designTokens";
 import { useFadeUp } from "../../../hooks/useFadeUp";
 
 /* ─── Service card data ──────────────────────────────────────────────────────── */
-// Use your actual image paths from the /public directory here
 const installCards = [
   {
     id: "exterior",
@@ -54,14 +53,14 @@ function ServiceCard({ card, isMain }) {
         borderRadius: 24,
         overflow: "hidden",
         position: "relative",
-        height: "100%", // Ensures it fills the grid cell height
-        width: "100%",  // Ensures it fills the grid cell width
-        minHeight: "420px", // Forces visibility on large screens
+        height: "100%", 
+        width: "100%",  
+        minHeight: "420px", 
         transition: "transform .3s ease, box-shadow .3s ease",
         transform: hovered ? "translateY(-5px)" : "translateY(0)",
         boxShadow: hovered ? "0 20px 40px rgba(0,0,0,0.15)" : "0 4px 12px rgba(0,0,0,0.08)",
         cursor: "pointer",
-        background: "#e0e0e0" // Fallback color
+        background: "#e0e0e0" 
       }}
     >
       <img 
@@ -76,26 +75,19 @@ function ServiceCard({ card, isMain }) {
         }}
       />
 
-      {/* This is the main fix for your contrast issue. 
-        A clean, semi-transparent box that separates the text 
-        from the complexity of the image detail. 
-      */}
       <div style={{
         position: "absolute",
         bottom: 0, left: 0, right: 0,
-        // Semi-transparent box background (matches the provided image style)
         backgroundColor: "rgba(0, 0, 0, 0.65)", 
-        // Gradient helps blend the image details at the top edge of the text box
         backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%)",
         padding: isMain ? "32px 24px" : "24px 12px",
         zIndex: 2,
-        // This height constraint is helpful to prevent vertical text cards from growing weirdly
         height: isMain ? "auto" : "220px", 
-        maxHeight: "60%", // Ensure image remains somewhat visible
+        maxHeight: "60%", 
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center", // Center text vertically within the box
-        borderTopLeftRadius: "12px", // Slight top rounding for a softer look
+        justifyContent: "center", 
+        borderTopLeftRadius: "12px", 
         borderTopRightRadius: "12px",
       }}>
         <h3 style={{
@@ -116,7 +108,7 @@ function ServiceCard({ card, isMain }) {
         {isMain && (
           <p style={{
             fontSize: "14px",
-            color: "rgba(255,255,255,0.95)", // High visibility white
+            color: "rgba(255,255,255,0.95)", 
             lineHeight: "1.5",
             marginTop: "12px",
             maxWidth: "320px",
@@ -131,7 +123,6 @@ function ServiceCard({ card, isMain }) {
 }
 
 /* ─── Main Section Component ───────────────────────────────────────────────── */
-// (This remains the same as previous)
 function InstallationServicesSection() {
   const row1Ref = useFadeUp();
   const row2Ref = useFadeUp();
@@ -145,7 +136,6 @@ function InstallationServicesSection() {
           padding: 0 40px;
         }
 
-        /* Large Screen Grid Layout */
         .svc-grid {
           display: grid;
           gap: 20px;
@@ -178,18 +168,25 @@ function InstallationServicesSection() {
 
         .svc-title span { color: #0d2137; display: block; }
 
-        /* Responsive Fixes */
         @media(max-width: 1024px) {
           .install-grid, .maint-grid {
             grid-template-columns: 1fr 1fr;
           }
-          .svc-header-box { grid-column: 1 / -1; }
-          .svc-title { font-size: 48px; margin-bottom: 20px; }
+          .svc-header-box { 
+            grid-column: 1 / -1; 
+            order: -1; /* Forces text to the top of the grid */
+            padding-left: 0 !important; /* Removes the desktop offset */
+            margin-bottom: 20px;
+          }
+          .svc-title { font-size: 48px; }
         }
 
         @media(max-width: 600px) {
           .install-grid, .maint-grid {
             grid-template-columns: 1fr;
+          }
+          .svc-header-box {
+             order: -1; /* Ensures text stays first on mobile */
           }
         }
       `}</style>
@@ -208,12 +205,12 @@ function InstallationServicesSection() {
 
         {/* ROW 2 */}
         <div className="svc-grid maint-grid" ref={row2Ref}>
+          <div className="svc-header-box second-header" style={{ paddingLeft: "40px" }}>
+            <h2 className="svc-title">MAINTENANCE<br/><span>& REPAIR</span></h2>
+          </div>
           <ServiceCard card={maintainCards[0]} isMain={false} />
           <ServiceCard card={maintainCards[1]} isMain={false} />
           <ServiceCard card={maintainCards[2]} isMain={true} />
-          <div className="svc-header-box" style={{ paddingLeft: "40px" }}>
-            <h2 className="svc-title">MAINTENANCE<br/><span>& REPAIR</span></h2>
-          </div>
         </div>
 
       </div>

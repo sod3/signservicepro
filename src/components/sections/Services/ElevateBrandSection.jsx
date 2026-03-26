@@ -5,7 +5,6 @@ function ElevateBrandSection() {
   const ref = useFadeUp();
 
   return (
-    /* We remove overflow: hidden from here so the head can stick out */
     <section style={{ background: C.navy, padding: "0", position: "relative" }}>
       <style>{`
         .about-layout {
@@ -17,24 +16,67 @@ function ElevateBrandSection() {
           gap: 40px;
           align-items: center;
         }
+
+        .person-img {
+          width: 100%;
+          height: auto;
+          display: block;
+          margin-top: -100px; /* Pulls head up on desktop */
+        }
+
+        .content-container {
+          padding: 60px 0;
+        }
+
         .btn-white {
           background-color: #F0F5E9;
-          color: #001A33; /* Dark navy text for the button */
+          color: #001A33;
           padding: 12px 28px;
-          border-radius: 50px; /* Rounded pill shape like image */
+          border-radius: 50px;
           text-decoration: none;
           font-weight: 800;
           text-transform: uppercase;
           font-size: 13px;
           display: inline-block;
           letter-spacing: 0.5px;
+          transition: transform 0.2s ease;
         }
-        @media(max-width:800px){
+
+        .btn-white:hover {
+          transform: scale(1.05);
+        }
+
+        @media(max-width: 850px) {
           .about-layout { 
             grid-template-columns: 1fr; 
             text-align: center;
+            padding-bottom: 40px;
           }
-          .person-container { margin-top: 0; }
+
+          .person-container {
+            max-width: 320px; /* Prevents the photo from being massive on mobile */
+            margin: 0 auto;
+            order: 1; /* Keeps person at the top if stacking */
+          }
+
+          .person-img {
+            margin-top: -60px; /* Slightly less aggressive pull-up for mobile */
+          }
+
+          .content-container {
+            padding: 20px 0 60px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .hero-p {
+            margin: 0 auto 32px auto !important;
+          }
+
+          .btn-wrapper {
+            justify-content: center;
+          }
         }
       `}</style>
 
@@ -44,22 +86,16 @@ function ElevateBrandSection() {
           <img 
             src="/photo_team.png" 
             alt="Team Member" 
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-              /* This negative margin pulls the head up out of the navy box */
-              marginTop: "-100px", 
-            }}
+            className="person-img"
           />
         </div>
 
         {/* Content */}
-        <div style={{ padding: "60px 0" }}>
+        <div className="content-container">
           <h2 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontWeight: 900, 
-            fontSize: "clamp(40px, 6vw, 65px)", /* Adjusted size to match layout better */
+            fontSize: "clamp(36px, 8vw, 65px)", 
             textTransform: "uppercase", 
             color: "#F0F5E9", 
             lineHeight: 1.1, 
@@ -70,7 +106,7 @@ function ElevateBrandSection() {
             PRESENCE?
           </h2>
           
-          <p style={{
+          <p className="hero-p" style={{
             fontSize: 15, 
             color: "white",
             lineHeight: 1.5, 
@@ -82,7 +118,7 @@ function ElevateBrandSection() {
             tailored to your needs.
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 15 }}>
+          <div className="btn-wrapper" style={{ display: "flex", flexWrap: "wrap", gap: 15 }}>
             <a href="#quote" className="btn-white">UPGRADE YOUR SIGNS!</a>
           </div>
         </div>
